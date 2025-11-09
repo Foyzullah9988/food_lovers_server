@@ -32,14 +32,12 @@ async function run() {
     await client.connect();
 
     const db = client.db('FoodLoversDB')
-    const productCollection = db.collection('products')
+    const productsCollection = db.collection('products')
 
 app.get('/products',async(req,res)=>{
-    const result = await productCollection.find().toArray();
+    const result = await productsCollection.find().toArray();
 
-    res.send({
-        success:true
-    })
+    res.send(result)
 })
 
 
