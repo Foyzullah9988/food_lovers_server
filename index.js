@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 const app = express();
@@ -23,8 +23,8 @@ const client = new MongoClient(uri, {
   }
 });
 
-app.get('/',(req,res)=>{
-    res.send('running the operation')
+app.get('/', (req, res) => {
+  res.send('running the operation')
 })
 
 async function run() {
@@ -34,18 +34,49 @@ async function run() {
     const db = client.db('FoodLoversDB')
     const productsCollection = db.collection('products')
 
-app.get('/products',async(req,res)=>{
-    const result = await productsCollection.find().toArray();
+    app.get('/products', async (req, res) => {
+      const result = await productsCollection.find().toArray();
 
-    res.send(result)
-})
+      res.send(result)
+    })
 
-app.post('/products',async(req,res)=>{
-  const data = req.body;
-  console.log(data);
-const result = await productsCollection.insertOne(data)
-res.send(result)
-})
+
+    app.get('/products-details/:id', async (req, res) => {
+      const { id } = req.params
+
+      const result = await productsCollection.findOne({ _id: new ObjectId(id) });
+
+      res.send(result)
+    })
+
+
+
+    app.post('/products', async (req, res) => {
+      const data = req.body;
+
+      const result = await productsCollection.insertOne(data);
+
+      res.send(result)
+    })
+
+    app.put('/products/:id', async (req, res) => {
+      const { id } = req.params;
+      const update = {
+        $set: req.body
+      }
+
+      const result = await productsCollection.updateOne({ _id: new ObjectId(id) }, update)
+
+      res.send(result)
+    })
+
+    app.delete('//products/:id', async (req, res) => {
+      const { id } = req.params;
+
+      const result = await productsCollection.deleteOne({ _id: new ObjectId(id) })
+
+      res.send(result)
+    })
 
 
     await client.db("admin").command({ ping: 1 });
@@ -58,6 +89,6 @@ res.send(result)
 run().catch(console.dir);
 
 
-app.listen(port,()=>{
-    console.log(`App running in port : ${port}`);
+app.listen(port, () => {
+  console.log(`App running in port : ${port}`);
 })
