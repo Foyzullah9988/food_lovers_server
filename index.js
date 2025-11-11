@@ -33,6 +33,7 @@ async function run() {
 
     const db = client.db('FoodLoversDB')
     const productsCollection = db.collection('products')
+    const favoriteCollection = db.collection('favorite')
 
     app.get('/products', async (req, res) => {
       const result = await productsCollection.find().toArray();
@@ -55,6 +56,15 @@ async function run() {
       const data = req.body;
 
       const result = await productsCollection.insertOne(data);
+
+      res.send(result)
+    })
+    
+    // favorite post 
+    app.post('/favorites', async (req, res) => {
+      const data = req.body;
+
+      const result = await favoriteCollection.insertOne(data);
 
       res.send(result)
     })
