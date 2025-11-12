@@ -36,6 +36,7 @@ async function run() {
     const favoriteCollection = db.collection('favorite')
 
     app.get('/products', async (req, res) => {
+
       const result = await productsCollection.find().toArray();
 
       res.send(result)
@@ -57,6 +58,16 @@ async function run() {
       res.send(result)
     })
 
+    app.get('/favorites/:id', async (req, res) => {
+      const { id } = req.params
+console.log(id);
+      const result = await favoriteCollection.findOne({ _id: new ObjectId(id) });
+console.log(result);
+      res.send(result)
+    })
+
+
+
 
 
     app.post('/products', async (req, res) => {
@@ -66,7 +77,7 @@ async function run() {
 
       res.send(result)
     })
-    
+
     // favorite post 
     app.post('/favorites', async (req, res) => {
       const data = req.body;
@@ -91,6 +102,16 @@ async function run() {
       const { id } = req.params;
 
       const result = await productsCollection.deleteOne({ _id: new ObjectId(id) })
+
+      res.send(result)
+    })
+
+    // favorite delete
+
+    app.delete('/favorites/:id', async (req, res) => {
+      const { id } = req.params;
+
+      const result = await favoriteCollection.deleteOne({ _id: new ObjectId(id) })
 
       res.send(result)
     })
