@@ -41,6 +41,13 @@ async function run() {
       res.send(result)
     })
 
+    // favorite get
+    app.get('/favorites', async (req, res) => {
+      const result = await favoriteCollection.find().toArray();
+
+      res.send(result)
+    })
+
 
     app.get('/products-details/:id', async (req, res) => {
       const { id } = req.params
