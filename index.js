@@ -60,9 +60,9 @@ async function run() {
 
     app.get('/favorites/:id', async (req, res) => {
       const { id } = req.params
-console.log(id);
+      console.log(id);
       const result = await favoriteCollection.findOne({ _id: new ObjectId(id) });
-console.log(result);
+      console.log(result);
       res.send(result)
     })
 
@@ -115,6 +115,23 @@ console.log(result);
 
       res.send(result)
     })
+
+    app.get('/products/search', async (req, res) => {
+      const key = req.query.key;
+      let result;
+      console.log(key);
+
+      if (!key ) {
+        result = await productsCollection.find().toArray();
+
+      } else {
+        result = await productsCollection.find({
+          foodName: { $regex: key, $options: "i" }
+        }).toArray();
+      }
+
+      res.send(result);
+    });
 
 
     await client.db("admin").command({ ping: 1 });
