@@ -34,7 +34,7 @@ async function run() {
     const productsCollection = db.collection('products')
     const favoriteCollection = db.collection('favorite')
 
-    app.get('/products', async (req, res) => {
+    app.get('/reviews', async (req, res) => {
 
       const result = await productsCollection.find().toArray();
 
@@ -49,7 +49,7 @@ async function run() {
     })
 
 
-    app.get('/products-details/:id', async (req, res) => {
+    app.get('/reviews-details/:id', async (req, res) => {
       const { id } = req.params
 
       const result = await productsCollection.findOne({ _id: new ObjectId(id) });
@@ -69,7 +69,7 @@ async function run() {
 
 
 
-    app.post('/products', async (req, res) => {
+    app.post('/reviews', async (req, res) => {
       const data = req.body;
 
       const result = await productsCollection.insertOne(data);
@@ -86,7 +86,7 @@ async function run() {
       res.send(result)
     })
 
-    app.put('/products/:id', async (req, res) => {
+    app.put('/reviews/:id', async (req, res) => {
       const { id } = req.params;
       const update = {
         $set: req.body
@@ -97,7 +97,7 @@ async function run() {
       res.send(result)
     })
 
-    app.delete('/products/:id', async (req, res) => {
+    app.delete('/reviews/:id', async (req, res) => {
       const { id } = req.params;
 
       const result = await productsCollection.deleteOne({ _id: new ObjectId(id) })
@@ -115,7 +115,7 @@ async function run() {
       res.send(result)
     })
 
-    app.get('/products/search', async (req, res) => {
+    app.get('/reviews/search', async (req, res) => {
       const key = req.query.key;
       let result;
       // console.log(key);

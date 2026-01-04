@@ -7,7 +7,7 @@ Purpose :
 This is the backend API for Local Food Lovers Network, built with Node.js, Express.js, and MongoDB. It manages all CRUD operations for reviews, favorites, and user data. The server handles data storage, retrieval, and authentication checks for the frontend client, ensuring a secure and efficient food review experience.
 
  Live API: https://foodies-zone-eta.vercel.app/
- 
+
  Server Repository: https://github.com/Foyzullah9988/food_lovers_server
 
  Key Features
@@ -15,23 +15,22 @@ This is the backend API for Local Food Lovers Network, built with Node.js, Expre
 
 POST /reviews — Add a new review (only for logged-in users).
 
-GET /reviews — Get all reviews (sorted by newest first).
+GET /reviews — Get all reviews.
 
 GET /reviews/:id — Get a single review by ID.
 
 GET /top-reviews — Get top 6 rated reviews for homepage.
 
-PUT /reviews/:id — Update an existing review.
+PUT /reviews/:id — Update an users existing review.
 
-DELETE /reviews/:id — Delete a review by ID.
+DELETE /reviews/:id — Delete a user review by ID.
 
  Favorite System
 
 POST /favorites — Add a review to the user’s favorites list.
 
-GET /favorites?email= — Fetch all favorites of a logged-in user.
 
-DELETE /favorites/:id — Remove a review from favorites .
+DELETE /favorites/:id — Remove a review from users favorites .
 
  Search Feature
 
